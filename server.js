@@ -14,11 +14,11 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://<db_username>:<db_password>@chatus.hnbhhu3.mongodb.net/?retryWrites=true&w=majority&appName=ChatUs', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+  .catch(err => console.error('MongoDB Error:', err));
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +28,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Session
 app.use(session({
-    secret: 'your_secret_key',
+    secret: process.env.SESSION_SECRET || 'fallback_secret',
     resave: false,
     saveUninitialized: false
 }));
@@ -41,6 +41,7 @@ app.get('/', (req, res) => res.redirect('/login'));
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
 
+// Socket.IO
 const users = {};
 
 io.on('connection', socket => {
@@ -99,5 +100,6 @@ io.on('connection', socket => {
     });
 });
 
+// Port
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
