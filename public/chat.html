@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatUs</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Assuming style.css exists -->
+</head>
+<body>
+    <div class="chat-header">
+        <h2>Welcome, <span id="username"></span> <img id="profile-pic" src="" alt="Profile Picture" /></h2>
+        <button onclick="window.location.href='/logout'">Logout</button>
+    </div>
+
+    <div id="chat-box">
+        <ul id="messages"></ul>
+        <form id="form" action="">
+            <input id="input" autocomplete="off" placeholder="Type your message..." />
+            <button>Send</button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        const messages = document.getElementById('messages');
+        const usernameDisplay = document.getElementById('username');
+        const profilePic = document.getElementById('profile-pic');
+
+        // Fetch username and profile image from session (handled via a route or passed directly from server)
+        fetch('/session') // Assuming you have this route or similar setup in the backend
+            .then(response => response.json())
+            .then(data => {
+                usernameDisplay.innerText = data.username;
+                profilePic.src = `/uploads/${data.profileImage || 'default-profile.png'}`; // Default if no profile image is set
+                socket.emit('join room', { username: data.username, room: 'General' }); // Ensure 'join room' matches the server event
+            });
+
+        // Form submission: emit message to the server
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chatMessage', { message: input.value });  // Ensure 'chatMessage' matches the server event
+                input.value = ''; // Clear input after sending message
+            }
+        });
+
+        // Socket event for receiving chat messages
+        socket.on('chatMessage', function(data) {  // Ensure 'chatMessage' matches the server event
+            const item = document.createElement('li');
+            const time = new Date(data.time);
+            const timeStr = `${time.getHours()}:${String(time.getMinutes()).padStart(2, '0')}`; // Format minutes
+            item.innerHTML = `[${timeStr}] <strong>${data.username}</strong>: ${data.message}`;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight); // Scroll to the latest message
+        });
+    </script>
+</body>
+</html>

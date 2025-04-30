@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile | ChatApp</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" width="150" height="150">
+        <p><strong>Username:</strong> <%= user.username %></p>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <a href="/chat" class="back-chat">Back to Chat</a>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+</body>
+</html>

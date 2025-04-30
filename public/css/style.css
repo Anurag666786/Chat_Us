@@ -1,0 +1,173 @@
+/* ---- style.css ---- */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+a {
+    text-decoration: none;
+    color: #7b2cbf;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #7b2cbf;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #5a189a;
+}
+
+.form-container {
+    width: 300px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.chat-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-window {
+    border: 1px solid #ccc;
+    height: 400px;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f0fc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatForm {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#emoji-button {
+    background: #e0aaff;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#scrollBtn {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    padding: 10px;
+    background: #7b2cbf;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+.room-select {
+    margin: 20px 0;
+}
+
+.logout {
+    display: inline-block;
+    margin-bottom: 20px;
+    background-color: #9d4edd;
+}
+
+/* Message Bubbles */
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 20px;
+    position: relative;
+    word-wrap: break-word;
+    clear: both;
+}
+
+.message .meta {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 5px;
+}
+
+.message.self {
+    background-color: #7b2cbf;
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+    text-align: right;
+    border-bottom-right-radius: 0;
+}
+
+.message.other {
+    background-color: #f1f0f0;
+    color: #000;
+    align-self: flex-start;
+    margin-right: auto;
+    border-bottom-left-radius: 0;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    font-style: italic;
+    color: #888;
+    margin-left: 10px;
+}
+
+/* Read Receipts */
+.read-receipt {
+    font-size: 0.7rem;
+    color: #aaa;
+    display: block;
+    margin-top: 2px;
+    text-align: right;
+}
+
+/* Media Preview */
+.media-preview {
+    max-width: 250px;
+    max-height: 250px;
+    margin-top: 5px;
+    border-radius: 10px;
+    object-fit: contain;
+}
