@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ChatUs
+    name: chatus
     env: node
     plan: free
     buildCommand: npm install
