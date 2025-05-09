@@ -8,11 +8,6 @@ const UserSchema = new mongoose.Schema({
         minlength: 3,
         maxlength: 20
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
     password: {
         type: String,
         required: true,
@@ -21,13 +16,6 @@ const UserSchema = new mongoose.Schema({
     profilePicture: {
         type: String,
         default: '/images/default-profile.png' // Default profile picture
-    },
-    isVerified: {
-        type: Boolean,
-        default: false
-    },
-    emailToken: {
-        type: String
     },
     createdAt: {
         type: Date,
