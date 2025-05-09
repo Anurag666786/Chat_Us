@@ -8,6 +8,7 @@ const socketIo = require('socket.io');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const chatRoutes = require('./routes/chat'); // ✅ Added chat route
 
 const app = express();
 const server = http.createServer(app);
@@ -40,6 +41,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => res.redirect('/login'));
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
+app.use('/chat', chatRoutes); // ✅ Mount /chat route
 
 // Socket.IO
 const users = {};
@@ -61,21 +63,12 @@ io.on('connection', socket => {
     socket.on('chatMessage', ({ message, media }) => {
         const user = users[socket.id];
         if (user) {
-            let mediaData = null;
-            if (media) {
-                mediaData = {
-                    url: media.data,
-                    type: media.type
-                };
-            }
-
             const msgData = {
                 username: user.username,
                 message,
-                media: mediaData,
+                media: media ? { url: media.data, type: media.type } : null,
                 time: new Date()
             };
-
             io.to(user.room).emit('chatMessage', msgData);
         }
     });
